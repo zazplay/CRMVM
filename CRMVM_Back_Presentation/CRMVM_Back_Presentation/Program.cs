@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Ovile_DAL_Layer.Contexts;
 using System.Text;
 
@@ -74,6 +75,30 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    var basePath = AppContext.BaseDirectory;
+
+    var xmlPath = Path.Combine(basePath, "CRMVM_Back_Presentation.xml");
+    options.IncludeXmlComments(xmlPath);
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1,0",
+        Title = " API CRVM_deals",
+        Description = "ASP .NET Core Web API (Апи сделки)",
+        Contact = new OpenApiContact
+        {
+            Name = "Авторы: Виктор и Макс",
+            Url = new Uri("https://example.com/contact")
+        },
+        
+    });
+});
 
 var app = builder.Build();
 

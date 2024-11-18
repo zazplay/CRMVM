@@ -3,6 +3,7 @@ using CRMVM_Back_Presentation.Models.Requests;
 using CRMVM_Back_Presentation.Models.Responses;
 using CRMVM_BLL.DTO;
 using CRMVM_BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,6 +11,7 @@ namespace CRMVM_Back_Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
 
@@ -44,7 +46,11 @@ namespace CRMVM_Back_Presentation.Controllers
         }
 
 
-
+        /// <summary>
+        /// Get deal by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("/getClientById")]
         public async Task<ActionResult<ClientResponse>> Get(string id)
         {

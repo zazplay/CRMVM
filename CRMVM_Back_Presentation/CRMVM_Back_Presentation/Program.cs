@@ -12,7 +12,6 @@ using Ovile_DAL_Layer.Contexts;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddDbContext<CRMVM_db_context>((serviceProvider, options) =>
@@ -51,8 +50,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEF>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IDealService, DealService>();
-
 builder.Services.AddControllers();
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
@@ -64,13 +63,22 @@ builder.Services.AddCors(option =>
         )
 );
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(options =>
 {
     var basePath = AppContext.BaseDirectory;
-
     var xmlPath = Path.Combine(basePath, "CRMVM_Back_Presentation.xml");
     options.IncludeXmlComments(xmlPath);
 });
@@ -87,11 +95,12 @@ builder.Services.AddSwaggerGen(options =>
             Name = "Авторы: Виктор и Макс",
             Url = new Uri("https://example.com/contact")
         },
-        
     });
 });
 
 var app = builder.Build();
+
+app.UseCors("AllowLocalhost");
 
 if (app.Environment.IsDevelopment())
 {
@@ -100,9 +109,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

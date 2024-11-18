@@ -1,0 +1,6 @@
+@CRMVM_Back_Presentation_HostAddress = http://localhost:5101
+
+GET {{CRMVM_Back_Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

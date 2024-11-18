@@ -28,8 +28,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<CRMVM_db_context>()
     .AddDefaultTokenProviders();
 
-
-// Adding Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,29 +47,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEF>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IDealService, DealService>();
 
-
-
 builder.Services.AddControllers();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "MyCors",
-                      policy =>
-                      {
-                          policy.AllowAnyOrigin();
-                          policy.AllowAnyHeader();
-                          policy.AllowAnyMethod();
-                      });
-});
+builder.Services.AddCors(option =>
+    option.AddDefaultPolicy(
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+        )
+);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -89,8 +80,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1,0",
-        Title = " API CRVM_deals",
-        Description = "ASP .NET Core Web API (Апи сделки)",
+        Title = " API.CRVM_deals",
+        Description = "ASP.NET Core Web API (Апи сделки)",
         Contact = new OpenApiContact
         {
             Name = "Авторы: Виктор и Макс",

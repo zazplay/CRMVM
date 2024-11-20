@@ -10,7 +10,7 @@ namespace CRMVM_Back_Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
 
     public class DealController : ControllerBase
     {

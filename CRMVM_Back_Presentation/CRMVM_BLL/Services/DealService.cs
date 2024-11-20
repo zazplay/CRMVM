@@ -40,7 +40,6 @@ namespace CRMVM_BLL.Services
             var dealEntity = _mapper.Map<Deal>(newDeal);
             newDeal.Id = Guid.NewGuid();
             await _unitOfWork.Deals.Create(dealEntity);
-            await _unitOfWork.CommitChanges();
             return _mapper.Map<DealDTO>(dealEntity);
         }
 
@@ -54,7 +53,6 @@ namespace CRMVM_BLL.Services
 
             dealEntity.Name = updatedDeal.Name;
             _unitOfWork.Deals.Update(dealEntity);
-            await _unitOfWork.CommitChanges();
             return _mapper.Map<DealDTO>(dealEntity);
         }
 
@@ -67,7 +65,6 @@ namespace CRMVM_BLL.Services
                 
                 dealEntity.Status = newStatus;
             
-                await _unitOfWork.CommitChanges();
 
                 return (_mapper.Map<DealDTO>(dealEntity));   
 
@@ -76,7 +73,6 @@ namespace CRMVM_BLL.Services
         public async Task DeleteDeal(Guid id)
         {
             await _unitOfWork.Deals.Delete(id);
-            await _unitOfWork.CommitChanges();
         }
 
         public void Dispose()

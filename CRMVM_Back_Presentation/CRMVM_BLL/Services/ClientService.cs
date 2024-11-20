@@ -41,7 +41,6 @@ namespace CRMVM_BLL.Services
             var clientEntity = _mapper.Map<Client>(newClient);
             newClient.Id = Guid.NewGuid();
             await _unitOfWork.Clients.Create(clientEntity);
-            await _unitOfWork.CommitChanges();
             return _mapper.Map<ClientDTO>(clientEntity);
         }
 
@@ -55,7 +54,6 @@ namespace CRMVM_BLL.Services
 
             clientEntity.Name = updatedClient.Name;
             _unitOfWork.Clients.Update(clientEntity);
-            await _unitOfWork.CommitChanges();
             return _mapper.Map<ClientDTO>(clientEntity);
         }
 
@@ -68,7 +66,6 @@ namespace CRMVM_BLL.Services
                 throw new Exception("Client with this id is not found");
             }
             await _unitOfWork.Clients.Delete(id);
-            await _unitOfWork.CommitChanges();
             return (_mapper.Map<ClientDTO>( client));
         }
 

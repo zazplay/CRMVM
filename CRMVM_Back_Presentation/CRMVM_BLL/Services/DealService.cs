@@ -64,9 +64,9 @@ namespace CRMVM_BLL.Services
                 var dealEntity = await _unitOfWork.Deals.Get(dealId);
                 
                 dealEntity.Status = newStatus;
-            
+                _unitOfWork.Deals.Update(dealEntity);
 
-                return (_mapper.Map<DealDTO>(dealEntity));   
+                 return (_mapper.Map<DealDTO>(dealEntity));   
 
         }
 

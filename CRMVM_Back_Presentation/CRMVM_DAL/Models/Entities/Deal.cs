@@ -21,9 +21,7 @@ namespace CRMVM_DAL.Models.Entities
 
         public string Status { get; set; }
 
-        public virtual ProductWarehouse Product { get; set; }
 
-        public int Quantity { get; set; }
     }
 
 
